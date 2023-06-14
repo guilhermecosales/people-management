@@ -1,8 +1,8 @@
 package com.github.peoplemanagement.controller;
 
 import com.github.peoplemanagement.controller.utility.Location;
-import com.github.peoplemanagement.dto.request.PersonRequest;
-import com.github.peoplemanagement.dto.response.PersonResponse;
+import com.github.peoplemanagement.dto.request.PersonRequestDto;
+import com.github.peoplemanagement.dto.response.PersonDto;
 import com.github.peoplemanagement.entity.Person;
 import com.github.peoplemanagement.service.PersonService;
 import lombok.RequiredArgsConstructor;
@@ -24,28 +24,28 @@ public class PersonController {
     private final ModelMapper modelMapper;
 
     @PostMapping
-    public ResponseEntity<PersonResponse> createPerson(@RequestBody PersonRequest request) {
+    public ResponseEntity<PersonDto> createPerson(@RequestBody PersonRequestDto request) {
         Person savedPerson = personService.save(modelMapper.map(request, Person.class));
         final URI location = Location.create(savedPerson.getPersonId());
-        return ResponseEntity.created(location).body(modelMapper.map(savedPerson, PersonResponse.class));
+        return ResponseEntity.created(location).body(modelMapper.map(savedPerson, PersonDto.class));
     }
 
     @PutMapping(path = "/{personId}")
-    public ResponseEntity<PersonResponse> updatePerson(@PathVariable(name = "personId") UUID personId, @RequestBody PersonRequest request) {
+    public ResponseEntity<PersonDto> updatePerson(@PathVariable(name = "personId") UUID personId, @RequestBody PersonRequestDto request) {
         Person newPersonData = modelMapper.map(request, Person.class);
         Person updatedPerson = personService.update(personId, newPersonData);
-        return ResponseEntity.ok().body(modelMapper.map(updatedPerson, PersonResponse.class));
+        return ResponseEntity.ok().body(modelMapper.map(updatedPerson, PersonDto.class));
     }
 
     @GetMapping(path = "/{personId}")
-    public ResponseEntity<PersonResponse> getOnePerson(@PathVariable(name = "personId") UUID personId) {
-        return ResponseEntity.ok().body(modelMapper.map(personService.findById(personId), PersonResponse.class));
+    public ResponseEntity<PersonDto> getOnePerson(@PathVariable(name = "personId") UUID personId) {
+        return ResponseEntity.ok().body(modelMapper.map(personService.findById(personId), PersonDto.class));
     }
 
     @GetMapping
-    public ResponseEntity<Page<PersonResponse>> getPersons(Pageable pageable) {
+    public ResponseEntity<Page<PersonDto>> getPersons(Pageable pageable) {
         Page<Person> peopleSaved = personService.findAll(pageable);
-        return ResponseEntity.ok().body(peopleSaved.map(person -> modelMapper.map(person, PersonResponse.class)));
+        return ResponseEntity.ok().body(peopleSaved.map(person -> modelMapper.map(person, PersonDto.class)));
     }
 
 }

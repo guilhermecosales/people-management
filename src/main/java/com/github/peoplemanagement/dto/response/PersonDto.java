@@ -13,7 +13,7 @@ import java.util.UUID;
  */
 
 @Data
-public class PersonResponse implements Serializable {
+public class PersonDto implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 4283686762833190013L;
