@@ -4,7 +4,6 @@ import com.github.peoplemanagement.entity.Address;
 import com.github.peoplemanagement.repository.AddressRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +16,6 @@ import java.util.UUID;
 public class AddressService {
 
     private final AddressRepository addressRepository;
-    private final ModelMapper modelMapper;
 
     @Transactional
     public Address save(final Address address) {
