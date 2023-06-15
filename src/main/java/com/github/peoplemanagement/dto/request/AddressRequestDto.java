@@ -16,7 +16,6 @@ import java.io.Serializable;
  */
 
 @Data
-@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class AddressRequestDto implements Serializable {
 
     @Serial
