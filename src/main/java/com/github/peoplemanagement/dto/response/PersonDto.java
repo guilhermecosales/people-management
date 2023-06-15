@@ -1,5 +1,6 @@
 package com.github.peoplemanagement.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.github.peoplemanagement.entity.Person;
 import lombok.Data;
 
@@ -13,6 +14,7 @@ import java.util.UUID;
  */
 
 @Data
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class PersonDto implements Serializable {
 
     @Serial
