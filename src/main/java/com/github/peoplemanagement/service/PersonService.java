@@ -2,6 +2,7 @@ package com.github.peoplemanagement.service;
 
 import com.github.peoplemanagement.entity.Person;
 import com.github.peoplemanagement.repository.PersonRepository;
+import com.github.peoplemanagement.service.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -41,7 +42,7 @@ public class PersonService {
     public Person findById(final UUID personId) {
         return personRepository
                 .findById(personId)
-                .orElseThrow(() -> new RuntimeException("Person with " + personId + " not found."));
+                .orElseThrow(() -> new NotFoundException("Person with ID " + personId + " not found."));
     }
 
     @Transactional(readOnly = true)
