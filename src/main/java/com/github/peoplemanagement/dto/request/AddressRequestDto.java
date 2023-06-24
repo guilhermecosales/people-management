@@ -1,6 +1,5 @@
 package com.github.peoplemanagement.dto.request;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.github.peoplemanagement.dto.response.PersonDto;
 import com.github.peoplemanagement.entity.Address;
 import jakarta.validation.constraints.NotBlank;
@@ -36,6 +35,8 @@ public class AddressRequestDto implements Serializable {
     @NotBlank
     @Size(min = 3, max = 10)
     private String city;
+
+    private boolean isDefault = true;
 
     @NotNull
     private PersonDto person;

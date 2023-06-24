@@ -29,6 +29,12 @@ public class AddressController {
         return ResponseEntity.created(location).body(modelMapper.map(savedAddress, AddressDto.class));
     }
 
+    @PatchMapping(path = "/addresses/{addressId}")
+    public ResponseEntity<AddressDto> createPerson(@PathVariable(name = "addressId") UUID addressId, @RequestBody AddressRequestDto request) {
+        Address savedAddress = addressService.partiallyUpdate(addressId, modelMapper.map(request, Address.class));
+        return ResponseEntity.ok().body(modelMapper.map(savedAddress, AddressDto.class));
+    }
+
     @GetMapping(path = "/persons/{personId}/addresses")
     public ResponseEntity<List<AddressDto>> getAddressesByPersonId(@PathVariable(name = "personId") UUID personId) {
         List<Address> savedAddresses = addressService.findByPersonId(personId);

@@ -36,6 +36,9 @@ public class Address implements Serializable {
     @Column(nullable = false)
     private String city;
 
+    @Column(nullable = false)
+    private boolean isDefault = true;
+
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     private Person person;

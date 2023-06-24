@@ -24,5 +24,6 @@ public class AddressDto implements Serializable {
     private String zipCode;
     private String number;
     private String city;
+    private boolean isDefault;
 
 }
