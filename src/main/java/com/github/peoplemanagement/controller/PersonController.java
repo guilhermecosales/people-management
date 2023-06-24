@@ -5,6 +5,7 @@ import com.github.peoplemanagement.dto.request.PersonRequestDto;
 import com.github.peoplemanagement.dto.response.PersonDto;
 import com.github.peoplemanagement.entity.Person;
 import com.github.peoplemanagement.service.PersonService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -24,14 +25,14 @@ public class PersonController {
     private final ModelMapper modelMapper;
 
     @PostMapping
-    public ResponseEntity<PersonDto> createPerson(@RequestBody PersonRequestDto request) {
+    public ResponseEntity<PersonDto> createPerson(@RequestBody @Valid PersonRequestDto request) {
         Person savedPerson = personService.save(modelMapper.map(request, Person.class));
         final URI location = Location.create(savedPerson.getPersonId());
         return ResponseEntity.created(location).body(modelMapper.map(savedPerson, PersonDto.class));
     }
 
     @PutMapping(path = "/{personId}")
-    public ResponseEntity<PersonDto> updatePerson(@PathVariable(name = "personId") UUID personId, @RequestBody PersonRequestDto request) {
+    public ResponseEntity<PersonDto> updatePerson(@PathVariable(name = "personId") UUID personId, @RequestBody @Valid PersonRequestDto request) {
         Person newPersonData = modelMapper.map(request, Person.class);
         Person updatedPerson = personService.update(personId, newPersonData);
         return ResponseEntity.ok().body(modelMapper.map(updatedPerson, PersonDto.class));

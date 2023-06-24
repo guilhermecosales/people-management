@@ -5,6 +5,7 @@ import com.github.peoplemanagement.dto.request.AddressRequestDto;
 import com.github.peoplemanagement.dto.response.AddressDto;
 import com.github.peoplemanagement.entity.Address;
 import com.github.peoplemanagement.service.AddressService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -23,14 +24,14 @@ public class AddressController {
     private final ModelMapper modelMapper;
 
     @PostMapping(path = "/addresses")
-    public ResponseEntity<AddressDto> createPerson(@RequestBody AddressRequestDto request) {
+    public ResponseEntity<AddressDto> createPerson(@RequestBody @Valid AddressRequestDto request) {
         Address savedAddress = addressService.save(modelMapper.map(request, Address.class));
         final URI location = Location.create(savedAddress.getAddressId());
         return ResponseEntity.created(location).body(modelMapper.map(savedAddress, AddressDto.class));
     }
 
     @PatchMapping(path = "/addresses/{addressId}")
-    public ResponseEntity<AddressDto> createPerson(@PathVariable(name = "addressId") UUID addressId, @RequestBody AddressRequestDto request) {
+    public ResponseEntity<AddressDto> createPerson(@PathVariable(name = "addressId") UUID addressId, @RequestBody @Valid AddressRequestDto request) {
         Address savedAddress = addressService.partiallyUpdate(addressId, modelMapper.map(request, Address.class));
         return ResponseEntity.ok().body(modelMapper.map(savedAddress, AddressDto.class));
     }
