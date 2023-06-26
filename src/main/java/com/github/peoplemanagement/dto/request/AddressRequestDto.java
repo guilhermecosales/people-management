@@ -21,7 +21,7 @@ public class AddressRequestDto implements Serializable {
     private static final long serialVersionUID = 6807677583474723367L;
 
     @NotBlank
-    @Size(min = 10, max = 60)
+    @Size(min = 5, max = 60)
     private String street;
 
     @NotBlank
