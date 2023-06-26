@@ -33,7 +33,7 @@ public class AddressRequestDto implements Serializable {
     private String number;
 
     @NotBlank
-    @Size(min = 3, max = 10)
+    @Size(min = 3, max = 20)
     private String city;
 
     private boolean isDefault = true;
