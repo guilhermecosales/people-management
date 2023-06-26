@@ -2,6 +2,7 @@ package com.github.peoplemanagement.controller;
 
 import com.github.peoplemanagement.controller.utility.Location;
 import com.github.peoplemanagement.dto.request.AddressRequestDto;
+import com.github.peoplemanagement.dto.request.AddressUpdateRequestDto;
 import com.github.peoplemanagement.dto.response.AddressDto;
 import com.github.peoplemanagement.entity.Address;
 import com.github.peoplemanagement.service.AddressService;
@@ -31,7 +32,7 @@ public class AddressController {
     }
 
     @PatchMapping(path = "/addresses/{addressId}")
-    public ResponseEntity<AddressDto> partiallyUpdateAddress(@PathVariable(name = "addressId") UUID addressId, @RequestBody @Valid AddressRequestDto request) {
+    public ResponseEntity<AddressDto> partiallyUpdateAddress(@PathVariable(name = "addressId") UUID addressId, @RequestBody @Valid AddressUpdateRequestDto request) {
         Address savedAddress = addressService.partiallyUpdate(addressId, modelMapper.map(request, Address.class));
         return ResponseEntity.ok().body(modelMapper.map(savedAddress, AddressDto.class));
     }
