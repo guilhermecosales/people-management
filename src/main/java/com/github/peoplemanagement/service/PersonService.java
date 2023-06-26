@@ -3,6 +3,7 @@ package com.github.peoplemanagement.service;
 import com.github.peoplemanagement.entity.Person;
 import com.github.peoplemanagement.repository.PersonRepository;
 import com.github.peoplemanagement.service.exception.NotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -29,13 +30,17 @@ public class PersonService {
 
     @Transactional
     public Person update(final UUID personId, final Person newPersonData) {
-        final Person savedPerson = personRepository.getReferenceById(personId);
+        try {
+            final Person savedPerson = personRepository.getReferenceById(personId);
 
-        TypeMap<Person, Person> personMapper = modelMapper.createTypeMap(Person.class, Person.class);
-        personMapper.addMappings(mapper -> mapper.skip(Person::setPersonId));
-        modelMapper.map(newPersonData, savedPerson);
+            TypeMap<Person, Person> personMapper = modelMapper.createTypeMap(Person.class, Person.class);
+            personMapper.addMappings(mapper -> mapper.skip(Person::setPersonId));
+            modelMapper.map(newPersonData, savedPerson);
 
-        return personRepository.save(savedPerson);
+            return personRepository.save(savedPerson);
+        } catch (EntityNotFoundException exception) {
+            throw new NotFoundException("Person with ID " + personId + " not found.");
+        }
     }
 
     @Transactional(readOnly = true)
