@@ -5,12 +5,17 @@ import com.github.peoplemanagement.entity.Person;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @DataJpaTest
 public class Factory {
 
     public static Person createPerson() {
         return new Person(null, "Richard S. Frye", LocalDate.of(1952, 2, 10), null);
+    }
+
+    public static Person createPerson(final UUID personId) {
+        return new Person(personId, "Richard S. Frye", LocalDate.of(1952, 2, 10), null);
     }
 
     public static Address createAddress() {
